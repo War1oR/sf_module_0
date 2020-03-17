@@ -27,6 +27,26 @@ def game_core_v2(number):
             predict -= 1
     return count  # выход из цикла, если угадали
 
+def game_core_v3(number):
+    """Сначала устанавливаем число по середине интервала, а затем сдвигаем левую границу на predict+1
+    если искомое число больше, либо правую на predict-1 если меньше. И так до тех пор пока не отгадаем.
+    Суть заключается в том, что мы всегда берем середину интервала. Так оптимальней всего."""
+    count = 0
+    l = 1
+    r = 100
+    while True:
+        predict = (l + r) // 2
+        if number > predict:
+            l = predict + 1
+            count += 1
+        elif number < predict:
+            r = predict - 1
+            count += 1
+        else:
+            count += 1
+            break
+    return count
+
 
 def score_game(algo):
     """Запускаем игру 1000 раз, чтоб узнать как быстро игра угадывает число"""
@@ -43,3 +63,4 @@ def score_game(algo):
 # запускаем
 score_game(game_core_v1)
 score_game(game_core_v2)
+score_game(game_core_v3)
